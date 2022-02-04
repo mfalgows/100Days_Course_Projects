@@ -1,0 +1,62 @@
+tttBoard = {'top-L': ' ', 'top-M': ' ', 'top-R': ' ',
+            'mid-L': ' ', 'mid-M': ' ', 'mid-R': ' ',
+            'low-L': ' ', 'low-M': ' ', 'low-R': ' '}
+
+def printboard(board):
+    print(board['top-L']+'|'+board['top-M']+'|'+board['top-R'])
+    print('-+-+-')
+    print(board['mid-L']+'|'+board['mid-M']+'|'+board['mid-R'])
+    print('-+-+-')
+    print(board['low-L']+'|'+board['low-M']+'|'+board['low-R'])
+
+def checkwin(board):
+    list_board=list(board.values())
+    if list_board[0]==list_board[1]==list_board[2] and list_board[0]!=' ':
+        return [list_board[0],True]
+    elif list_board[3]==list_board[4]==list_board[5] and list_board[3]!=' ':
+        return [list_board[3],True]
+    elif list_board[6]==list_board[7]==list_board[8]and list_board[6]!=' ':
+        return [list_board[6],True]
+    elif list_board[0]==list_board[3]==list_board[6]and list_board[0]!=' ':
+        return [list_board[0],True]
+    elif list_board[1]==list_board[4]==list_board[7]and list_board[1]!=' ':
+        return [list_board[1],True]
+    elif list_board[2]==list_board[5]==list_board[8]and list_board[2]!=' ':
+        return [list_board[2],True]
+    elif list_board[0]==list_board[4]==list_board[8]and list_board[0]!=' ':
+        return [list_board[0],True]
+    elif list_board[2]==list_board[4]==list_board[6]and list_board[2]!=' ':
+        return [list_board[2],True]
+    else:
+        return [' ',False]
+
+
+print('Welcome to Tic-Tac-Toe!')
+
+turn='X'
+while ' ' in tttBoard.values():
+    printboard(tttBoard)
+    choice=input(f'{turn}, where would you like to move? Ex. top-L,mid-M,low-R \n')
+    if tttBoard[choice]==turn or tttBoard[choice]!=' ':
+        print('Sorry that space has already been taken, try again')
+        continue
+    elif choice in tttBoard.keys():
+        tttBoard[choice]=turn
+    else:
+        print('Could not understand that, please try again:')
+        continue
+
+    if turn=='X':
+        turn='O'
+    elif turn=='O':
+        turn='X'
+
+    winner=checkwin(tttBoard)
+    if winner[1]==True:
+        printboard(tttBoard)
+        play_again=input(f'{winner[0]} won! Would you like to play again?').lower()
+        if play_again=='n' or play_again=='No':
+            break
+        else:
+            for keys in tttBoard:
+                tttBoard[keys]=' '
